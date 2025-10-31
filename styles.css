@@ -1,0 +1,188 @@
+:root{
+    margin:0;
+    padding:0;
+    --main-font-family: sans-serif; 
+    --text-color: #7C6C5C;
+    --primary-color: #141A1A;
+    --add-color: #28a745;
+    --delete-color: red;
+}
+
+body{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-family: var(--main-font-family);
+    /* overflow: hidden; */
+}
+
+/* Esta regla solo se aplicará en admin.html */
+.admin-page .block__graphic {
+    max-width: 500px; /* Define un ancho máximo para la columna de la imagen */
+    flex-basis: 20%;  /* Reduce su espacio base en el layout flexible */
+}
+
+.admin-page .block__graphic{
+    width: 100%;
+    height: 100%;
+}
+
+/* Botón de Guardar Menú */
+.save-container {
+    position: fixed; /* Fija el botón a la pantalla */
+    bottom: 30px;    /* A 30px del borde inferior */
+    right: 30px;     /* A 30px del borde derecho */
+    z-index: 1000;   /* Se asegura de que esté por encima de todo lo demás */
+}
+
+/* Opcional: Un estilo extra para que el botón se vea mejor */
+#saveMenuBtn {
+    padding: 15px 25px;
+    font-size: 1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #218838; /* Sombra sólida 3D */
+    transition: transform 0.1s, box-shadow 0.1s;
+    /* Evita que el texto se seleccione al hacer doble clic */
+    user-select: none;
+}
+
+/* Efecto rápido al hacer clic (opcional, pero mejora la sensación) */
+#saveMenuBtn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #218838;
+}
+
+/* --- CLASE NUEVA Y CLAVE --- */
+/* Estilo que se aplicará DURANTE el guardado */
+#saveMenuBtn.is-saving {
+    transform: translateY(4px); /* Mantiene el botón hundido */
+    box-shadow: none; /* Sin sombra */
+    cursor: not-allowed; /* Cambia el cursor para indicar que está ocupado */
+}
+
+
+/* --- 1. CONFIGURACIÓN GENERAL DEL LAYOUT --- */
+/* Contenedor de cada fila (texto + imagen) */
+.container__block {
+    display: flex;
+    align-items: center; /* Centra verticalmente el texto y la imagen */
+    width: 100%;
+    margin-bottom: 2rem; /* Espacio entre las filas */
+  /*background-color: #f0f0f0;  Un fondo para ver los límites */
+}
+
+.col-product{
+    width: 30%;
+}
+.col-product input{
+    width: 90%;
+}
+
+.col-price{
+    width: 15%;
+}
+.col-price input{
+    width: 85%;
+}
+
+.col-description{
+    width: 40%;
+}
+
+.col-description input{
+    width: 90%;
+}
+
+/* Los hijos directos (texto e imagen) se reparten el espacio 50/50 */
+.block__item,
+.block__graphic {
+    flex: 1; /* Ocupa el 50% del ancho */
+    padding: 1rem;
+}
+
+/* --- 2. EL SECRETO PARA CORTAR LAS IMÁGENES --- */
+
+/* Contenedor que sirve de "marco" para la imagen */
+.block__graphic {
+    height: 450px; /* Damos una altura fija para el ejemplo */
+    padding: 0; /* Quitamos el padding para que la imagen ocupe todo el espacio */
+    overflow: hidden;/* ¡CLAVE! Oculta cualquier parte de la imagen que se salga de este div */
+}
+
+/* Estilos generales para AMBAS imágenes */
+.block__graphic img {
+    width: 100%;
+    height: 100%;
+
+    /* Hace que la imagen cubra todo el contenedor sin deformarse.
+       Esto es lo que provoca que una parte se "desborde". */
+    object-fit: cover;
+}
+
+
+/* --- 3. DIRECCIÓN DEL DESBORDE PARA CADA IMAGEN --- */
+
+/* Para la PRIMERA imagen (café) */
+.graphic--img1 img {
+    /* La alineamos a la IZQUIERDA de su contenedor.
+       El resto de la imagen (la parte derecha) se desborda y se oculta. */
+    object-position: left center;
+}
+
+/* Para la SEGUNDA imagen (croissant) */
+.graphic--img2 img {
+    /* La alineamos a la DERECHA de su contenedor.
+       El resto de la imagen (la parte izquierda) se desborda y se oculta. */
+    object-position: right center;
+    width: 15rem;
+    margin-left: -1rem;
+}
+
+
+
+
+
+/* ============================================================ */
+/*            TABLAS (Agregar - Elminar filas)                  */
+/* ============================================================ */
+
+.add-btn{
+    background-color: var(--add-color);
+    color:#fff;
+    padding: 0.3rem 0.5rem;
+    margin: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor:pointer;
+    width: fit-content;
+    box-shadow: -2px 2px 0 #218838; /* Sombra sólida 3D */
+    transition: transform 0.1s, box-shadow 0.1s;
+    /* Evita que el texto se seleccione al hacer doble clic */
+    user-select: none;
+}
+
+.add-btn:hover{
+    transform: translateX(2px) translateY(-2px);
+}
+
+.delete-btn{
+    background-color: var(--delete-color);
+    color:#fff;
+    padding: 0.3rem 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor:pointer;
+    width: fit-content;
+    box-shadow: -2px 2px 0 #f9f3f3; /* Sombra sólida 3D */
+    transition: transform 0.1s, box-shadow 0.1s;
+    /* Evita que el texto se seleccione al hacer doble clic */
+    user-select: none;
+}
+
+.delete-btn:hover{
+    transform: translateX(2px) translateY(-2px);
+}
+

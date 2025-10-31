@@ -1,0 +1,205 @@
+:root{
+    margin:0;
+    padding:0;
+    --main-font-family:sans-serif; 
+    --text-color: #7C6C5C;
+    --primary-color: #1A1A1A;
+}
+
+body {
+    font-family: var(--main-font-family);
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary-color);
+}
+header { text-align: center; margin-top: 1rem; margin-bottom: 1rem; }
+header img { max-width: 300px; }
+
+
+/* --- ESTRUCTURA DEL LAYOUT DE CADA SECCIÓN --- */
+
+/* El contenedor principal de cada sección (Ej: Café de especialidad) */
+.menu-section {
+    display: flex; /* ¡La clave! Habilita Flexbox */
+    align-items: center; /* Centra verticalmente */
+    margin-bottom: 0rem;
+    background-color: var(--primary-color);
+    overflow: hidden; /* Importante para el efecto de la imagen */
+}
+
+/* Las dos columnas interiores: contenido e imagen */
+.menu-content {
+    flex: 0 1 60%; /* Base del 60% */
+    /* Significa: flex-grow: 0, flex-shrink: 1, flex-basis: 60% */
+    padding: 1rem;
+}
+
+.menu-image {
+    flex: 0 1 40%; /* Base del 40% */
+    /* Significa: flex-grow: 0, flex-shrink: 1, flex-basis: 40% */
+}
+
+/* --- LA MAGIA PARA INVERTIR EL ORDEN --- */
+.menu-section.layout-reversed {
+    flex-direction: row-reverse; /* Invierte el orden de las columnas */
+}
+
+/* --- ESTILOS DEL CONTENIDO (PRODUCTOS Y PRECIOS) --- */
+.menu-content h2 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 0.5rem;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+/* .menu-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    color: var(--text-color);
+} */
+.producto { 
+    font-weight: bold; 
+    color: var(--text-color);
+}
+
+/* --- ESTILOS PARA LAS IMÁGENES (EFECTO CORTADO) --- */
+.menu-image {
+    padding: 0;
+    height: 300px; /* Ajusta la altura a tu gusto */
+}
+.menu-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Rellena el contenedor sin deformarse */
+}
+
+/* Hacemos que la imagen de la primera sección se ancle a la izquierda */
+.menu-section:not(.layout-reversed) .menu-image img {
+    object-position: left center;
+}
+
+/* Hacemos que la imagen de la sección invertida se ancle a la derecha */
+.menu-section.layout-reversed .menu-image img {
+    object-position: right center;
+    width: 10rem;
+}
+
+/*TABLAS*/
+.item--product2 + h2{
+    margin: 0;
+}
+
+/* En tu menu-styles.css */
+
+.menu-item {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; /* <--- La solución clave: apila los elementos verticalmente */
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 0.2rem;
+    padding: 0;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-details {
+    /* Estado inicial: oculto */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0; /* Lo ajustamos para que no haya salto */
+    
+    /* La magia del rebote está en esta transición */
+    transition: all 0.5s cubic-bezier(.17,.67,.6,1.21);
+}
+
+.item-details.visible {
+    /* Estado final: visible */
+    max-height: 100px; /* Un alto máximo suficiente para la descripción */
+    opacity: 1;
+    margin-top: 0.2rem;
+}
+
+/* DISCLAIMER */
+.disclaimer{
+    color: var(--text-color);
+    text-align: center;
+}
+
+.disclaimer p{
+    font-size: 12px;
+    border: 1px solid var(--text-color);
+    padding: 0.3rem;
+    margin: 1rem 1rem;
+}
+
+footer{
+    margin-top: 50px;
+}
+
+footer p{
+    color: var(--text-color);
+    text-align: center;
+    margin: 0;
+}
+
+.iconFooter{
+    display: flex;
+    justify-content: space-between;
+    margin: 0.1rem;
+    gap: 1rem;
+}
+
+.iconFooter a:first-child{
+    margin-left: 0.5rem;
+}
+
+.iconFooter a:last-child{
+    margin-right: 0.5rem;
+}
+
+.iconFooter a{
+    display: flex;
+    text-decoration: none;
+    color: var(--text-color);
+    gap:8px;
+    font-size: 0.9rem;
+}
+
+.iconFooter a img {
+    width: 24px;
+    height: 24px;
+}
+
+.textFooter{
+    margin-bottom: 1rem ;
+}
+
+.copyright{
+    margin-top: 1rem;
+    font-size: 0.5rem;
+}
+
+/* Media Queries para pantalla modo horizontal */
+/* Alternativa más fluida dentro de la media query */
+@media (orientation: landscape) {
+    
+    /* El tamaño de la letra será el 2.5% del ancho de la pantalla */
+    .menu-item {
+        font-size: 2.5vw;
+    }
+
+    /* Para evitar que sea demasiado grande en tablets, podemos usar clamp() */
+    /* Mínimo 1.2rem, ideal 2.5vw, máximo 1.8rem */
+    .menu-item {
+        font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+    }
+}
