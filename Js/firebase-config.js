@@ -3,13 +3,13 @@
 // Estas credenciales las copiaste de la Consola de Firebase.
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCAWoAt7ImKtgnQepF9jTyGV0mPusWMTzA",
-  authDomain: "maldito-cafe.firebaseapp.com",
-  projectId: "maldito-cafe",
-  storageBucket: "maldito-cafe.firebasestorage.app",
-  messagingSenderId: "471022150149",
-  appId: "1:471022150149:web:b74f1d3f54af3b010ab26c",
-  measurementId: "G-S0X5TTK9R6" // Esto es para Analytics, no afecta a Firestore.
+  apiKey: "AIzaSyCTDpEKDnXkmsSjgaNivpOx2pLsGgLUX1U",
+  authDomain: "menu-tamplate-d5622.firebaseapp.com",
+  projectId: "menu-tamplate-d5622",
+  storageBucket: "menu-tamplate-d5622.firebasestorage.app",
+  messagingSenderId: "229910792827",
+  appId: "1:229910792827:web:319d6596c60f844a3570de",
+  measurementId: "G-XWX5LGWEJ3"
 };
 
 // Inicializa Firebase usando la API de compatibilidad (ya que tu HTML carga los SDK compat)

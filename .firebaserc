@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "maldito-cafe"
-  }
+    "default": "menu-tamplate-d5622"
+  },
+  "targets": {},
+  "etags": {}
 }
