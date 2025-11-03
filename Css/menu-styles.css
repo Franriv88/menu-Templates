@@ -193,6 +193,28 @@ header p{
     margin-top: 0.2rem;
 }
 
+/* --- NUEVA REGLA PARA LOS TÍTULOS DE COLUMNA (MODIFICADA) --- */
+.item-header-titles {
+    font-weight: bold;
+    color: var(--text-color2); /* Color del título H2 */
+    margin-top: 15px; /* Espacio sobre los títulos */
+    margin-bottom: -10px; /* Espacio reducido bajo los títulos */
+    font-size: 0.85em; /* <-- 1. TAMAÑO DE FUENTE REDUCIDO */
+}
+/* Hacemos que los spans dentro de los títulos también se alineen */
+.item-header-titles .producto,
+.item-header-titles .precio,
+.item-header-titles .precio-2 {
+    font-weight: bold; 
+    margin-bottom: 10px;
+    color: var(--text-color2);
+    white-space: nowrap; /* <-- 2. EVITA QUE EL TEXTO SE PARTA */
+    overflow: hidden; /* <-- 3. OCULTA EL TEXTO SOBRANTE */
+    text-overflow: ellipsis; /* <-- 4. AGREGA "..." SI NO ENTRA */
+    font-size: 0.5rem;
+}
+
+
 /* DISCLAIMER */
 .disclaimer{
     color: var(--text-color);

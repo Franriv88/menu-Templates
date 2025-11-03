@@ -21,6 +21,8 @@
     <div class="container">
         <div class="container__block block--row1">
             <div class="block__item item--product1">
+                
+                <!-- EJEMPLO 1: Sin atributos. No mostrará encabezados. -->
                 <h2>NUESTRAS PASTAS</h2>
                 <button class="add-btn" type="button" onclick="agregarFila(this)">+</button>
                 <table>
@@ -33,7 +35,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <h2>SANDWICHES</h2>
+
+                <!-- EJEMPLO 2: Con 1 atributo. Mostrará "Precio". -->
+                <h2 data-price1-title="Precio">SANDWICHES</h2>
                 <button class="add-btn" type="button" onclick="agregarFila(this)">+</button>
                 <table>
                     <tbody>
@@ -97,7 +101,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <h2>NUESTRA COCINA</h2>
+
+                <!-- EJEMPLO 3: Con 2 atributos. Mostrará "Precio" y "Promo" (si hay datos) -->
+                <h2 data-price1-title="INDIVIDUAL" data-price2-title="PARA COMPARTIR">NUESTRA COCINA</h2>
                 <button class="add-btn" type="button" onclick="agregarFila(this)">+</button>
                 <table>
                     <tbody>
