@@ -10,13 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const seccionesConfig = {
-        "CAFÉ DE ESPECIALIDAD": { layout: 'normal', grupo: 'cafes', imagen: './img/img/coffee.png' },
-        "CAFÉ FRÍO":          { layout: 'normal', grupo: 'cafes' },
-        "BEBIDAS":            { layout: 'reversed', grupo: 'bebidas_y_extras', imagen: './img/img/tea.png' },
-        "EXTRAS":             { layout: 'reversed', grupo: 'bebidas_y_extras' },
-        "SALADOS":            { layout: 'normal', grupo: 'salados_y_laminados', imagen: './img/img/croissant.png' },
-        "LAMINADOS":          { layout: 'normal', grupo: 'salados_y_laminados' },
-        "DULCES":             { layout: 'reversed', imagen: './img/img/cookie.png' }
+        "NUESTRAS PASTAS": { layout: 'normal', grupo: 'pastas', imagen: './img/img/pastas.jpg' },
+        "SANDWICHES":      { layout: 'normal', grupo: 'sanwiches' },
+        "MENÚ INFANTIL":   { layout: 'reversed', grupo: 'menuInfantil', imagen: './img/img/infantil2.jpg' },
+        "BEBIDAS":         { layout: 'reversed', grupo: 'bebidas_y_extras' },
+        "ENTRADAS":        { layout: 'normal', grupo: 'salados_y_laminados', imagen: './img/img/empanada.png' },
+        "NUESTRA COCINA":  { layout: 'normal' },
+        "DULCES":          { layout: 'reversed', imagen: './img/img/cookie.png' }
     };
 
     db.collection('productos').orderBy('orden', 'asc').orderBy('ordenProducto', 'asc').onSnapshot(snapshot => {
@@ -53,7 +53,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 seccionHTML += `<h2>${nombreCategoria}</h2>`;
                 itemsDeCategoria.forEach(item => {
                     const descripcion = item.descripcion || "El clásico de la casa.";
-                    seccionHTML += `<div class="menu-item" data-producto="${item.nombre}" data-categoria="${nombreCategoria}"><div class="item-header"><span class="producto">${item.nombre}</span><span class="precio">$${item.precio}</span></div><div class="item-details"><p>${descripcion}</p></div></div>`;
+                    
+                    // --- INICIO DE LA MODIFICACIÓN ---
+
+                    // 1. Prepara el span del precio 2 (solo si existe y es mayor que 0)
+                    let precio2Span = '';
+                    if (item.precio2) {
+                        // Puedes cambiar la clase 'precio-2' si quieres darle un estilo CSS diferente
+                        precio2Span = `<span class="precio precio-2">$${item.precio2}</span>`; 
+                    }
+
+                    // 2. Construye el HTML del item, incluyendo el precio 2 (si existe)
+                    seccionHTML += `<div class="menu-item" data-producto="${item.nombre}" data-categoria="${nombreCategoria}">
+                                        <div class="item-header">
+                                            <span class="producto">${item.nombre}</span>
+                                            <span class="precio">$${item.precio}</span>
+                                            ${precio2Span} </div>
+                                        <div class="item-details"><p>${descripcion}</p></div>
+                                    </div>`;
+                    
+                    // --- FIN DE LA MODIFICACIÓN ---
                 });
             }
             seccionHTML += `</div>`;

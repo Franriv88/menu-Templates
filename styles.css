@@ -15,6 +15,8 @@ body{
     /* overflow: hidden; */
 }
 
+
+
 /* Esta regla solo se aplicará en admin.html */
 .admin-page .block__graphic {
     max-width: 500px; /* Define un ancho máximo para la columna de la imagen */
@@ -81,11 +83,21 @@ body{
     width: 90%;
 }
 
-.col-price{
-    width: 15%;
+/* --- CORRECCIÓN DE ALINEACIÓN DE PRECIOS --- */
+
+/* 1. Define un ancho base para las CELDAS (td) */
+.col-price,
+.col-price2 {
+    width: 15%; /* Le da un 15% del espacio de la tabla */
+    /* La siguiente línea es opcional, pero ayuda a que el texto no se pegue */
+    padding-right: 10px; 
 }
-.col-price input{
-    width: 85%;
+
+/* 2. Define un ancho FIJO para los INPUTS (la clave) */
+.col-price input,
+.col-price2 input {
+    width: 100px;  /* <-- ANCHO FIJO EN PÍXELES */
+    box-sizing: border-box; /* Evita problemas de padding */
 }
 
 .col-description{
@@ -120,6 +132,7 @@ body{
     /* Hace que la imagen cubra todo el contenedor sin deformarse.
        Esto es lo que provoca que una parte se "desborde". */
     object-fit: cover;
+    z-index: 1;
 }
 
 
@@ -130,6 +143,7 @@ body{
     /* La alineamos a la IZQUIERDA de su contenedor.
        El resto de la imagen (la parte derecha) se desborda y se oculta. */
     object-position: left center;
+    width: 1px;
 }
 
 /* Para la SEGUNDA imagen (croissant) */
@@ -139,6 +153,7 @@ body{
     object-position: right center;
     width: 15rem;
     margin-left: -1rem;
+    
 }
 
 

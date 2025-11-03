@@ -2,8 +2,9 @@
     margin:0;
     padding:0;
     --main-font-family:sans-serif; 
-    --text-color: #7C6C5C;
-    --primary-color: #1A1A1A;
+    --text-color: #000;
+    --text-color2: #954130;
+    --primary-color: #FFF;
 }
 
 body {
@@ -13,7 +14,20 @@ body {
     background-color: var(--primary-color);
 }
 header { text-align: center; margin-top: 1rem; margin-bottom: 1rem; }
-header img { max-width: 300px; }
+header img { max-width: 500px; }
+
+h1, h2{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: var(--text-color2);
+}
+
+header p{
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-top: 0;;
+}
 
 
 /* --- ESTRUCTURA DEL LAYOUT DE CADA SECCIÓN --- */
@@ -44,13 +58,21 @@ header img { max-width: 300px; }
     flex-direction: row-reverse; /* Invierte el orden de las columnas */
 }
 
+.menu-section:not(:has(.menu-image)) .menu-content {
+    flex-basis: 100%;
+    /* Opcional: Centra los títulos si no hay imagen */
+    /* text-align: center; */ 
+}
+
 /* --- ESTILOS DEL CONTENIDO (PRODUCTOS Y PRECIOS) --- */
 .menu-content h2 {
     border-bottom: 2px solid #333;
     padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
     margin-top: 20px;
     margin-bottom: 5px;
-    color: var(--text-color);
+    color: var(--primary-color);
+    background-color: #1F6028;
 }
 /* .menu-item {
     display: flex;
@@ -62,8 +84,16 @@ header img { max-width: 300px; }
 .producto { 
     font-weight: bold; 
     color: var(--text-color);
+    flex-grow: 1;
+    margin-right: 10px;
+    font-size: 1.3rem;
 }
 
+@media (max-width: 678px) {
+    .producto{
+        font-size: 0.8rem;
+    }
+}
 /* --- ESTILOS PARA LAS IMÁGENES (EFECTO CORTADO) --- */
 .menu-image {
     padding: 0;
@@ -75,15 +105,32 @@ header img { max-width: 300px; }
     object-fit: cover; /* Rellena el contenedor sin deformarse */
 }
 
+
 /* Hacemos que la imagen de la primera sección se ancle a la izquierda */
 .menu-section:not(.layout-reversed) .menu-image img {
-    object-position: left center;
+    object-position: left center;   
+
+}
+
+@media (min-width: 768px) {
+    .menu-image {
+        height: 400px; /* Aumenta la altura en pantallas más grandes */
+    }
 }
 
 /* Hacemos que la imagen de la sección invertida se ancle a la derecha */
 .menu-section.layout-reversed .menu-image img {
     object-position: right center;
-    width: 10rem;
+    margin-right: 10%;
+    width: 12rem;
+}
+
+@media (min-width: 768px) {
+    .menu-image {
+        height: 400px; /* Aumenta la altura en pantallas más grandes */
+        
+        
+    }
 }
 
 /*TABLAS*/
@@ -106,8 +153,26 @@ header img { max-width: 300px; }
 
 .item-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* justify-content: space-between; */
+    align-items: baseline;
+}
+
+.precio,
+.precio-2 {
+    width: 100px; /* Ancho fijo para la columna */
+    text-align: right; /* Alinea el número a la derecha */
+    flex-shrink: 0; /* Evita que se encoja */
+    margin-left: 5px; /* Espacio entre los dos precios */
+}
+
+@media (max-width: 600px) {
+    .precio, .precio-2 {
+    width: 50px; /* Ancho fijo para la columna */
+    text-align: right; /* Alinea el número a la derecha */
+    flex-shrink: 0; /* Evita que se encoja */
+    margin-left: 5px; /* Espacio entre los dos precios */
+    font-size: 0.9rem;
+    }
 }
 
 .item-details {

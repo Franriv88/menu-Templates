@@ -22,6 +22,7 @@ function agregarFila(boton_agregar) {
     nuevaFila.innerHTML = `
         <td class="col-product"><input type="text" name="product[]" placeholder="Nombre"/></td>
         <td class="col-price"><input type="number" name="price[]" placeholder="Precio"/></td>
+        <td class="col-price2"><input type="number" name="price2[]" placeholder="Precio"/></td>
         <td class="col-description"><input type="text" name="description[]" placeholder="Descripción"/></td>
         <td><button class="delete-btn" onclick="eliminarFila(this)">X</button></td>`;
 }
@@ -66,15 +67,17 @@ async function cargarMenuExistente() {
                     nuevaFila.innerHTML = `
                         <td class="col-product"><input type="text" name="product[]" value="${producto.nombre || ''}"/></td>
                         <td class="col-price"><input type="number" name="price[]" value="${producto.precio || ''}"/></td>
+                        <td class="col-price2"><input type="number" name="price2[]" value="${producto.precio2 || ''}"/></td>
                         <td class="col-description"><input type="text" name="description[]" value="${producto.descripcion || ''}"/></td>
                         <td><button class="delete-btn" onclick="eliminarFila(this)">X</button></td>`;
                 });
             } else {
                  // Si no hay productos para esta categoría, agrega una fila vacía
-                 const nuevaFila = tabla.insertRow();
-                 nuevaFila.innerHTML = `
+                const nuevaFila = tabla.insertRow();
+                nuevaFila.innerHTML = `
                     <td class="col-product"><input type="text" name="product[]" placeholder="Nombre"/></td>
                     <td class="col-price"><input type="number" name="price[]" placeholder="Precio"/></td>
+                    <td class="col-price2"><input type="number" name="price2[]" placeholder="Precio"/></td>
                     <td class="col-description"><input type="text" name="description[]" placeholder="Descripción"/></td>
                     <td><button class="delete-btn" onclick="eliminarFila(this)">X</button></td>`;
             }
@@ -95,13 +98,13 @@ async function guardarMenu() {
 
     // Define el orden de las categorías
     const ordenes = {
-        "CAFÉ DE ESPECIALIDAD": 1,
-        "CAFÉ FRÍO":          2,
-        "BEBIDAS":            3,
-        "EXTRAS":             4,
-        "SALADOS":            5,
-        "LAMINADOS":          6,
-        "DULCES":             7
+        "NUESTRAS PASTAS": 1,
+        "SANDWICHES":      2,
+        "MENÚ INFANTIL":   3,
+        "BEBIDAS":         4,
+        "ENTRADAS":        5,
+        "NUESTRA COCINA":  6,
+        "DULCES":          7
     };
 
     const productosParaGuardar = [];
@@ -115,12 +118,14 @@ async function guardarMenu() {
             tabla.querySelectorAll('tbody tr').forEach((fila, index) => {
                 const productoInput = fila.querySelector('input[name="product[]"]');
                 const precioInput = fila.querySelector('input[name="price[]"]');
+                const precioInput2 = fila.querySelector('input[name="price2[]"]');
                 const descripcionInput = fila.querySelector('input[name="description[]"]');
 
                 if (productoInput && productoInput.value && precioInput && precioInput.value) {
                     productosParaGuardar.push({
                         nombre: productoInput.value.trim(),
                         precio: parseFloat(precioInput.value),
+                        precio2: precioInput2 && precioInput2.value ? parseFloat(precioInput2.value) : null,
                         categoria: categoria,
                         descripcion: descripcionInput ? descripcionInput.value.trim() : "",
                         orden: ordenes[categoria] || 99,
@@ -132,13 +137,29 @@ async function guardarMenu() {
     });
 
     try {
-        // Sincroniza con Firebase: borra todo y vuelve a escribir
+        // --- MODIFICACIÓN: Usar un lote (batch) para una escritura atómica ---
+        
+        // 1. Obtener la referencia a todos los documentos actuales
         const snapshotActual = await db.collection('productos').get();
-        const deletePromises = snapshotActual.docs.map(doc => doc.ref.delete());
-        await Promise.all(deletePromises);
+        
+        // 2. Crear un nuevo lote
+        const batch = db.batch();
 
-        const addPromises = productosParaGuardar.map(producto => db.collection('productos').add(producto));
-        await Promise.all(addPromises);
+        // 3. Añadir todas las operaciones de BORRADO al lote
+        snapshotActual.docs.forEach(doc => {
+            batch.delete(doc.ref);
+        });
+
+        // 4. Añadir todas las operaciones de ESCRITURA al lote
+        productosParaGuardar.forEach(producto => {
+            const newDocRef = db.collection('productos').doc(); // Crea una nueva ref
+            batch.set(newDocRef, producto); // Añade la creación del nuevo doc al lote
+        });
+
+        // 5. Ejecutar el lote (o todo funciona, o nada cambia)
+        await batch.commit();
+
+        // --- FIN DE LA MODIFICACIÓN ---
 
         alert('¡Menú guardado con éxito en Firebase!');
         console.log("Datos guardados en Firestore:", productosParaGuardar);
