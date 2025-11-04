@@ -1,5 +1,3 @@
-// menu-viewers.js (Versión con títulos de columna dinámicos)
-
 document.addEventListener('DOMContentLoaded', async () => { // <-- Vuelto ASYNC
     const menuContainer = document.getElementById('menu-container');
 
@@ -78,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => { // <-- Vuelto ASYNC
                 const itemsDeCategoria = categoriasDelGrupo[nombreCategoria];
                 seccionHTML += `<h2>${nombreCategoria}</h2>`;
                 
-                // --- NUEVO: Lógica para mostrar títulos de columna ---
+                // --- Lógica para mostrar títulos de columna ---
                 const meta = categoriaMeta[nombreCategoria] || {};
                 let hasPrice2Data = false;
                 itemsDeCategoria.forEach(item => { if (item.precio2) hasPrice2Data = true; });
@@ -86,23 +84,30 @@ document.addEventListener('DOMContentLoaded', async () => { // <-- Vuelto ASYNC
                 const title1 = meta.title1;
                 const title2 = (meta.title2 && hasPrice2Data) ? meta.title2 : null;
 
-                // Si hay título 1 o 2, inyectamos la fila de encabezado
                 if (title1 || title2) {
                     seccionHTML += `<div class="item-header item-header-titles">
-                                        <span class="producto"></span> <!-- Espacio vacío para alinear -->
+                                        <span class="producto"></span>
                                         <span class="precio">${title1 || ''}</span>
                                         <span class="precio-2">${title2 || ''}</span>
                                     </div>`;
                 }
-                // --- FIN DE LA MODIFICACIÓN ---
-
+                
                 itemsDeCategoria.forEach(item => {
                     const descripcion = item.descripcion || "El clásico de la casa.";
                     
+                    // --- INICIO DE LA CORRECCIÓN CLAVE ---
+                    
                     let precio2Span = '';
                     if (item.precio2) {
+                        // Si hay precio 2, créalo
                         precio2Span = `<span class="precio precio-2">$${item.precio2}</span>`; 
+                    } else {
+                        // ¡CLAVE! Si NO hay precio 2, crea un "placeholder" vacío
+                        // que ocupe el espacio de la columna.
+                        precio2Span = `<span class="precio-2"></span>`;
                     }
+                    
+                    // --- FIN DE LA CORRECCIÓN CLAVE ---
 
                     seccionHTML += `<div class="menu-item" data-producto="${item.nombre}" data-categoria="${nombreCategoria}">
                                         <div class="item-header">
