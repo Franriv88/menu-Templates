@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => { // <-- Vuelto ASYNC
         "SANDWICHES":      { layout: 'normal', grupo: 'sanwiches' },
         "MENÚ INFANTIL":   { layout: 'reversed', grupo: 'menuInfantil', imagen: './img/img/infantil2.jpg' },
         "BEBIDAS":         { layout: 'reversed', grupo: 'bebidas_y_extras' },
-        "ENTRADAS":        { layout: 'normal', grupo: 'salados_y_laminados', imagen: './img/img/croissant.png' },
+        "ENTRADAS":        { layout: 'normal', grupo: 'salados_y_laminados'},
         "NUESTRA COCINA":  { layout: 'normal' }, // <-- Quitamos el grupo para que sea independiente
         "DULCES":          { layout: 'reversed', imagen: './img/img/cookie.png' }
     };
