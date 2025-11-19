@@ -5,6 +5,7 @@
     --text-color: #000;
     --text-color2: #954130;
     --primary-color: #FFF;
+    --green-color: #28a745;
 }
 
 body {
@@ -289,4 +290,11 @@ footer p{
     .menu-item {
         font-size: clamp(1.2rem, 3.5vw, 1.8rem);
     }
+}
+
+#whatsapp{
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: var(--green-color);
 }
