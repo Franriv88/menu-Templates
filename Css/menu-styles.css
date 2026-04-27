@@ -297,4 +297,9 @@ footer p{
     font-size: 2rem;
     font-weight: bolder;
     color: var(--green-color);
+    
+}
+
+.textFooter {
+    text-align: center;
 }
